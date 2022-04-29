@@ -24,21 +24,28 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(int id){
-        if(userRepository.findById(id).isPresent()){
-            return userRepository.findById(id);
-        } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found!");
-               // .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, ""));
-
+    public User findByIdOrThrowBadRequestException(int id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found!"));
     }
 
     public User saveUser(User user){
+        // user.setId(idAleatorio);
         userRepository.save(user);
+
+        this.findByIdOrThrowBadRequestException(user.id);
+
         return user;
     }
 
     public void deleteUserById(int id){
-        this.findById(id);
+        this.findByIdOrThrowBadRequestException(id);
         userRepository.deleteById(id);
+    }
+
+    public User replaceUser(User user) {
+        this.deleteUserById(user.id);
+        this.saveUser(user);
+        return user;
     }
 }

@@ -31,8 +31,8 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    private ResponseEntity<Optional<User>> findById(@PathVariable int id){
-        return ResponseEntity.ok(userService.findById(id));
+    private ResponseEntity<User> findById(@PathVariable int id){
+        return ResponseEntity.ok(userService.findByIdOrThrowBadRequestException(id));
     }
 
     @PostMapping("/saveUser")
@@ -45,5 +45,10 @@ public class UserController {
     private ResponseEntity<Void> deleteUserById(@PathVariable int id){
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/replaceUser")
+    private ResponseEntity<User> replaceUser(@RequestBody User user){
+        return new ResponseEntity<>(userService.replaceUser(user), HttpStatus.CREATED);
     }
 }

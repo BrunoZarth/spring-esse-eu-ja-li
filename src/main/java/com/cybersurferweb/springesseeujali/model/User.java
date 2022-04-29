@@ -1,9 +1,17 @@
 package com.cybersurferweb.springesseeujali.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name= "user", schema = "public")
+@Builder
 public class User {
 
     @Id
