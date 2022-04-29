@@ -2,6 +2,8 @@ package com.cybersurferweb.springesseeujali.Service;
 
 import com.cybersurferweb.springesseeujali.model.User;
 import com.cybersurferweb.springesseeujali.repository.UserRepository;
+import com.cybersurferweb.springesseeujali.requests.UserPostRequestBody;
+import com.cybersurferweb.springesseeujali.requests.UserPutRequestBody;
 import lombok.AllArgsConstructor;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.http.HttpStatus;
@@ -29,12 +31,17 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found!"));
     }
 
-    public User saveUser(User user){
-        // user.setId(idAleatorio);
+    public User saveUser(UserPostRequestBody userPostRequestBody){
+
+        User user = User.builder()
+                .email(userPostRequestBody.getEmail())
+                .name(userPostRequestBody.getName())
+                .password(userPostRequestBody.getPassword())
+                .score(userPostRequestBody.getScore())
+                .build();
+
         userRepository.save(user);
-
         this.findByIdOrThrowBadRequestException(user.id);
-
         return user;
     }
 
@@ -43,9 +50,17 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User replaceUser(User user) {
-        this.deleteUserById(user.id);
-        this.saveUser(user);
+    public User replaceUser(UserPutRequestBody userPutRequestBody) {
+        User savedUser = this.findByIdOrThrowBadRequestException(userPutRequestBody.getId());
+        User user = User.builder()
+                .id(userPutRequestBody.getId())
+                .email(userPutRequestBody.getEmail())
+                .name(userPutRequestBody.getName())
+                .password(userPutRequestBody.getPassword())
+                .score(userPutRequestBody.getScore())
+                .build();
+
+        userRepository.save(user);
         return user;
     }
 }

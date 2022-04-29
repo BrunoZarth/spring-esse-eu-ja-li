@@ -3,6 +3,8 @@ package com.cybersurferweb.springesseeujali.controller;
 import com.cybersurferweb.springesseeujali.Service.UserService;
 import com.cybersurferweb.springesseeujali.model.User;
 import com.cybersurferweb.springesseeujali.repository.UserRepository;
+import com.cybersurferweb.springesseeujali.requests.UserPostRequestBody;
+import com.cybersurferweb.springesseeujali.requests.UserPutRequestBody;
 import com.cybersurferweb.springesseeujali.util.DateUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -37,8 +39,8 @@ public class UserController {
 
     @PostMapping("/saveUser")
     @ResponseStatus(HttpStatus.CREATED)
-    private ResponseEntity<User> saveUser(@RequestBody User user){
-        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+    private ResponseEntity<User> saveUser(@RequestBody UserPostRequestBody userPostRequestBody){
+        return new ResponseEntity<>(userService.saveUser(userPostRequestBody), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/deleteUser/{id}")
@@ -48,7 +50,7 @@ public class UserController {
     }
 
     @PutMapping("/replaceUser")
-    private ResponseEntity<User> replaceUser(@RequestBody User user){
-        return new ResponseEntity<>(userService.replaceUser(user), HttpStatus.CREATED);
+    private ResponseEntity<User> replaceUser(@RequestBody UserPutRequestBody userPutRequestBody){
+        return new ResponseEntity<>(userService.replaceUser(userPutRequestBody), HttpStatus.CREATED);
     }
 }
