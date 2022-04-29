@@ -26,6 +26,10 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found!"));
     }
 
+    public List<User> findByName(String name){
+        return userRepository.findByName(name);
+    }
+
     public User saveUser(UserPostRequestBody userPostRequestBody){
 
         User user = User.builder()
@@ -58,4 +62,5 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+
 }

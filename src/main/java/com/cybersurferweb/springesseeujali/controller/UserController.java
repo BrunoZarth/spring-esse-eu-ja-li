@@ -37,6 +37,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findByIdOrThrowBadRequestException(id));
     }
 
+    @GetMapping("/user")
+    private ResponseEntity<List<User>> findByName(@RequestParam String name){
+        return ResponseEntity.ok(userService.findByName(name));
+    }
+
     @PostMapping("/saveUser")
     @ResponseStatus(HttpStatus.CREATED)
     private ResponseEntity<User> saveUser(@RequestBody UserPostRequestBody userPostRequestBody){
