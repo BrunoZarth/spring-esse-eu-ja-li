@@ -1,5 +1,6 @@
 package com.cybersurferweb.springesseeujali.Service;
 
+import com.cybersurferweb.springesseeujali.exception.BadRequestException;
 import com.cybersurferweb.springesseeujali.model.User;
 import com.cybersurferweb.springesseeujali.repository.UserRepository;
 import com.cybersurferweb.springesseeujali.requests.UserPostRequestBody;
@@ -23,7 +24,7 @@ public class UserService {
 
     public User findByIdOrThrowBadRequestException(int id){
         return userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found!"));
+                .orElseThrow(() -> new BadRequestException("User id not found!"));
     }
 
     public List<User> findByName(String name){
