@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +45,7 @@ public class UserController {
 
     @PostMapping("/saveUser")
     @ResponseStatus(HttpStatus.CREATED)
-    private ResponseEntity<User> saveUser(@RequestBody UserPostRequestBody userPostRequestBody){
+    private ResponseEntity<User> saveUser(@RequestBody @Valid UserPostRequestBody userPostRequestBody){
         return new ResponseEntity<>(userService.saveUser(userPostRequestBody), HttpStatus.CREATED);
     }
 
@@ -55,7 +56,7 @@ public class UserController {
     }
 
     @PutMapping("/replaceUser")
-    private ResponseEntity<User> replaceUser(@RequestBody UserPutRequestBody userPutRequestBody){
+    private ResponseEntity<User> replaceUser(@RequestBody @Valid UserPutRequestBody userPutRequestBody){
         return new ResponseEntity<>(userService.replaceUser(userPutRequestBody), HttpStatus.CREATED);
     }
 }
